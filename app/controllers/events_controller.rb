@@ -58,9 +58,21 @@ class EventsController < ApplicationController
   end
 
   get "/events/:slug/delete" do
-      @event = Event.find_by_slug(params[:slug])
-      erb :'events/delete_event'
+    @event = Event.find_by_slug(params[:slug])
+    erb :'events/delete_event'
   end
+
+  delete "/events/:slug/delete" do
+    @event = Event.find_by_slug(params[:slug])
+    @user = User.find_by_id(session[:user_id])
+
+    if @user == @event.user
+      @event.delete
+      redirect '/events'
+    else
+      redirect '/events'
+    end
+  end 
 
 
 
