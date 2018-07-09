@@ -8,6 +8,7 @@ class UsersController < ApplicationController
     @user = User.create(params[:user])
       if @user.save
         session[:user_id] = @user.id
+
         redirect to '/'
       else
         redirect '/signup'
@@ -19,13 +20,13 @@ class UsersController < ApplicationController
   end
 
   post '/login' do
-    @users = User.find_by(username: params[:username])
-
+    @user = User.find_by(username: params[:username])
+    
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
       redirect '/events'
     else
-      erb :'users/login'
+      erb :'/welcome'
     end
 
   end

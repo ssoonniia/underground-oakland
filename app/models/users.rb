@@ -4,4 +4,8 @@ class User < ActiveRecord::Base
   validates :email, presence: true
   has_many :events
 
+  include Slugify::InstanceMethods
+    extend Slugify::ClassMethods
+
+
 end

@@ -1,3 +1,7 @@
 class EventsController < ApplicationController
 
-end 
+  get '/events' do
+    erb :'events/events'
+  end
+
+end

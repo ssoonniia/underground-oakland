@@ -1,0 +1,7 @@
+<h1>Welcome, <%=current_user.name %></h1>
+
+<%Event.all.each do |event| %>
+  <%=event.name %>
+  <%=event.date %>
+  <%=event.location %>
+<%end %>
