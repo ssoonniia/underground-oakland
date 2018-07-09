@@ -37,7 +37,7 @@ class EventsController < ApplicationController
     end
   end
 
-  get '/events/:slug/edit_event' do
+  get '/events/:slug/edit' do
     if !logged_in?
       redirect '/login'
     else
@@ -46,13 +46,20 @@ class EventsController < ApplicationController
     end
   end
 
-  patch ":slug/edit_event" do
+
+
+  patch '/events/:slug/edit' do
     @event = Event.find_by_slug(params[:slug])
-    @event.udpate(params['event'])
+    @event.update(params['event'])
     @event.save
 
     erb :'events/show_event'
 
+  end
+
+  get "/events/:slug/delete" do
+      @event = Event.find_by_slug(params[:slug])
+      erb :'events/delete_event'
   end
 
 

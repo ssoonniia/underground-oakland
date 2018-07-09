@@ -1,4 +1,4 @@
-<h1>Check out your event</h1>
+<h1>Check Out Your Event</h1>
 
 <h3><%=@event.name%></h3></br>
 <%=@event.date %></br>
@@ -7,4 +7,7 @@
 
 
 
-<a href="<%=@event.slug%>/edit_event">Edit Event</a>
+<a href="<%=@event.slug%>/edit">Edit Event</a></br>
+<a href="<%=@event.slug%>/delete">Delete Event</a></br>
+<a href="/events">Check Out All Events</a></br>
+<a href="/logout">Log Out</a>
