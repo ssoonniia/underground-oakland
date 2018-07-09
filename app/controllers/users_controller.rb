@@ -9,10 +9,15 @@ class UsersController < ApplicationController
       if @user.save
         session[:user_id] = @user.id
 
-        redirect to '/'
+        redirect to '/show'
       else
         redirect '/signup'
       end
+  end
+
+  get '/show' do
+    @user = User.find_by_id(session[:user_id])
+    erb :'users/show'
   end
 
   get '/login' do
