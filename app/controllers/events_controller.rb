@@ -22,15 +22,22 @@ class EventsController < ApplicationController
     @event.user = @user
 
     if @event.save
-      redirect "/event/#{@event.slug}"
+      redirect "events/#{@event.slug}"
     else
       redirect '/events/new'
     end
   end
 
   get '/events/:slug' do
-    @event = Event.find_by_slug(params[:slug])
+    if !logged_in?
+      redirect '/login'
+    else
+      @event = Event.find_by_slug(params[:slug])
+      erb :'events/show_event'
+    end
+  end
 
-    erb :'events/show_event'
+
+
 
 end
