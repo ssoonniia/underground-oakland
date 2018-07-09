@@ -1,7 +1,7 @@
 module Slugify
   module InstanceMethods
     def slug
-      username.gsub(/\s/,'-').downcase
+      name.gsub(/\s/,'-').downcase 
     end
 
     def unslug(slug)

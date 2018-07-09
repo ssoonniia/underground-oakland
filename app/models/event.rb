@@ -5,4 +5,7 @@ class Event < ActiveRecord::Base
   validates :location, presence: true
   validates :cost, presence: true
   validates :description, presence: true
+
+  include Slugify::InstanceMethods
+    extend Slugify::ClassMethods
 end
