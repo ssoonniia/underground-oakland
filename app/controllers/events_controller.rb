@@ -37,6 +37,11 @@ class EventsController < ApplicationController
     end
   end
 
+  get '/events/:slug/edit_event' do 
+    @event = Event.find_by_slug(params[:slug])
+    erb :'events/edit_event'
+  end
+
 
 
 
