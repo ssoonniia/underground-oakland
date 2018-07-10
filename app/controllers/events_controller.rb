@@ -35,10 +35,16 @@ class EventsController < ApplicationController
   end
 
   get '/events/:slug' do
-    if !logged_in?
+    @event = Event.find_by_slug(params[:slug])
+    @user = User.find_by_id(session[:user_id])
+
+    if @event.user_id != @user.id
+      # Not your event
+      redirect '/events'
+    elsif !logged_in?
       redirect '/'
     else
-      @event = Event.find_by_slug(params[:slug])
+
       erb :'events/show_event'
     end
   end
@@ -69,7 +75,16 @@ class EventsController < ApplicationController
 
   get "/events/:slug/delete" do
     @event = Event.find_by_slug(params[:slug])
-    erb :'events/delete_event'
+    @user = User.find_by_id(session[:user_id])
+
+    if @event.user_id != @user.id
+      # error you cannot edit this event
+      redirect '/events'
+    elsif !logged_in?
+      redirect '/'
+    else
+      erb :'events/delete_event'
+    end 
   end
 
   delete "/events/:slug/delete" do
