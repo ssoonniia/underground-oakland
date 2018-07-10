@@ -44,18 +44,25 @@ class EventsController < ApplicationController
   end
 
   get '/events/:slug/edit' do
-    if !logged_in?
+    @event = Event.find_by_slug(params[:slug])
+    @user = User.find_by_id(session[:user_id])
+
+    if @event.user_id != @user.id
+      # error you cannot edit this event
+      redirect '/events'
+    elsif !logged_in?
       redirect '/'
     else
-      @event = Event.find_by_slug(params[:slug])
       erb :'events/edit_event'
     end
+
   end
 
   patch '/events/:slug/edit' do
     @event = Event.find_by_slug(params[:slug])
     @event.update(params['event'])
     @event.save
+
 
     erb :'events/show_event'
   end

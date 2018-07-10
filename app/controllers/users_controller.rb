@@ -33,7 +33,8 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect '/events'
     else
-      erb :'users/login'
+      # create error message instructing username and password do not match. OR create new account
+      redirect :'/'
     end
   end
 
