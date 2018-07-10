@@ -15,6 +15,9 @@
   </head>
   <body>
     <div class="wrapper">
+      <% if flash[:message] %>
+      <%= flash[:message] %>
+      <% end %>
 
         <%= yield %>
 

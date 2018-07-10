@@ -1,11 +1,12 @@
 require 'rack-flash'
+
 class EventsController < ApplicationController
-  # enable :sessions
-  # use Rack::Flash
-# events
+  enable :sessions
+  use Rack::Flash
+
   get '/events' do
     if !logged_in?
-      # flash[:message] = "Please log or sign up to see events."
+      flash[:message] = "Please log or sign up to see events."
       redirect '/'
     else
       erb :'events/events'
@@ -14,6 +15,7 @@ class EventsController < ApplicationController
 
   get '/events/new' do
     if !logged_in?
+      flash[:message] = "Please log in or sign up to create a new event."
       redirect '/'
     else
       erb :'events/create_event'
@@ -28,15 +30,17 @@ class EventsController < ApplicationController
     if @event.save
       redirect "events/#{@event.slug}"
     else
+      flash[:message] = "Oh Oh ...seems like some fields were not completed. Please complete all fields!"
       redirect '/events/new'
     end
   end
 
   get '/events/:slug' do
     if !logged_in?
+      flash[:message] = "Please log in or sign up to see events."
       redirect '/'
     elsif !owner?
-      #error not your event
+      flash[:message] = "Yikes - you didn't create this event. You cannot edit this event"
       redirect '/events'
     else
       erb :'events/show_event'
@@ -46,16 +50,17 @@ class EventsController < ApplicationController
 
   get '/events/:slug/edit' do
     if !logged_in?
+      flash[:message] = "Please log in or sign up to create a new event."
       redirect '/'
     elsif !owner?
-      # error you cannot edit this event
+      flash[:message] = "Yikes - you didn't create this event. You cannot edit this event"
       redirect '/events'
     else
       erb :'events/edit_event'
     end
   end
 
-  patch '/events/:slug/edit' do
+  patch '/events/:slug' do
     @event = Event.find_by_slug(params[:slug])
     @event.update(params['event'])
     @event.save
@@ -67,6 +72,7 @@ class EventsController < ApplicationController
     if !logged_in?
       redirect '/'
     elsif !owner?
+      flash[:message] ="Yikes - you didn't create this event. You cannot delete this event"
       redirect '/events'
     else
       erb :'events/delete_event'
@@ -76,14 +82,8 @@ class EventsController < ApplicationController
   delete '/events/:slug/delete' do
     @event = Event.find_by_slug(params[:slug])
     @user = User.find_by_id(session[:user_id])
-
-    if owner?
-      @event.delete
-      redirect '/events'
-    else
-      #message not allowed to delete
-      redirect '/events'
-    end
+    @event.delete
+    redirect '/events'
   end
-  
+
 end
