@@ -74,17 +74,7 @@ class EventsController < ApplicationController
   end
 
   get "/events/:slug/delete" do
-    @event = Event.find_by_slug(params[:slug])
-    @user = User.find_by_id(session[:user_id])
-
-    if @event.user_id != @user.id
-      # error you cannot edit this event
-      redirect '/events'
-    elsif !logged_in?
-      redirect '/'
-    else
-      erb :'events/delete_event'
-    end 
+      owner?(erb :'events/delete_event')
   end
 
   delete "/events/:slug/delete" do
@@ -95,6 +85,7 @@ class EventsController < ApplicationController
       @event.delete
       redirect '/events'
     else
+      #message not allowed to delete
       redirect '/events'
     end
   end
