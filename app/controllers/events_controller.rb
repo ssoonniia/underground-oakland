@@ -35,21 +35,30 @@ class EventsController < ApplicationController
   end
 
   get '/events/:slug' do
-    @event = Event.find_by_slug(params[:slug])
-    @user = User.find_by_id(session[:user_id])
+    if !owner?
+        redirect '/events'
+      elsif !logged_in?
+        redirect '/'
+      else
+        erb :'events/show_event'
+      end 
 
-    if @event.user_id != @user.id
-      # Not your event
-      redirect '/events'
-    elsif !logged_in?
-      redirect '/'
-    else
-
-      erb :'events/show_event'
-    end
+    # @event = Event.find_by_slug(params[:slug])
+    # @user = User.find_by_id(session[:user_id])
+    #
+    # if @event.user_id != @user.id
+    #   # Not your event
+    #   redirect '/events'
+    # elsif !logged_in?
+    #   redirect '/'
+    # else
+    #
+    #   erb :'events/show_event'
+    # end
   end
 
   get '/events/:slug/edit' do
+    # owner?(erb :'events/edit_event')
     @event = Event.find_by_slug(params[:slug])
     @user = User.find_by_id(session[:user_id])
 
@@ -61,14 +70,12 @@ class EventsController < ApplicationController
     else
       erb :'events/edit_event'
     end
-
   end
 
   patch '/events/:slug/edit' do
     @event = Event.find_by_slug(params[:slug])
     @event.update(params['event'])
     @event.save
-
 
     erb :'events/show_event'
   end

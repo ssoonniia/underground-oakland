@@ -25,33 +25,33 @@ class ApplicationController < Sinatra::Base
    end
   end
 
-  def owner(route)
+  def owner?
     @event = Event.find_by_slug(params[:slug])
     @user = User.find_by_id(session[:user_id])
-    if @event.user_id != @user.id
-      # error you cannot edit this event
-      redirect '/events'
-    elsif !logged_in?
-      redirect '/'
-    else
-      route 
+    if @event.user_id == @user.id
+      true
     end
+    # elsif !logged_in?
+    #   redirect '/'
+    # else
+    #   route
+    # end
 
   end
 
 
-  get "/events/:slug/delete" do
-    @event = Event.find_by_slug(params[:slug])
-    @user = User.find_by_id(session[:user_id])
-
-    if @event.user_id != @user.id
-      # error you cannot edit this event
-      redirect '/events'
-    elsif !logged_in?
-      redirect '/'
-    else
-      erb :'events/delete_event'
-    end
-  end
+  # get "/events/:slug/delete" do
+  #   @event = Event.find_by_slug(params[:slug])
+  #   @user = User.find_by_id(session[:user_id])
+  #
+  #   if @event.user_id != @user.id
+  #     # error you cannot edit this event
+  #     redirect '/events'
+  #   elsif !logged_in?
+  #     redirect '/'
+  #   else
+  #     erb :'events/delete_event'
+  #   end
+  # end
 
 end
