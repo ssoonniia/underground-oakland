@@ -1,9 +1,13 @@
+require 'rack-flash'
 class EventsController < ApplicationController
-
+  # enable :sessions
+  # use Rack::Flash
 # events
   get '/events' do
     if !logged_in?
+      # flash[:message] = "Please log or sign up to see events."
       redirect '/'
+
     else
       erb :'events/events'
     end
@@ -18,6 +22,7 @@ class EventsController < ApplicationController
   end
 
   post '/events/new' do
+
     @event = Event.create(params['event'])
     @user = User.find_by_id(session[:user_id])
     @event.user = @user

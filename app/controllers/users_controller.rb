@@ -1,4 +1,7 @@
+require 'rack-flash'
 class UsersController < ApplicationController
+  # enable :sessions
+  # use Rack::Flash
 
   get '/signup' do
     erb :'users/signup'
