@@ -35,38 +35,23 @@ class EventsController < ApplicationController
   end
 
   get '/events/:slug' do
-    if !owner?
-        redirect '/events'
-      elsif !logged_in?
-        redirect '/'
-      else
-        erb :'events/show_event'
-      end 
-
-    # @event = Event.find_by_slug(params[:slug])
-    # @user = User.find_by_id(session[:user_id])
-    #
-    # if @event.user_id != @user.id
-    #   # Not your event
-    #   redirect '/events'
-    # elsif !logged_in?
-    #   redirect '/'
-    # else
-    #
-    #   erb :'events/show_event'
-    # end
+    if !logged_in?
+      redirect '/'
+    elsif !owner?
+      #error not your event
+      redirect '/events'
+    else
+      erb :'events/show_event'
+    end
   end
 
-  get '/events/:slug/edit' do
-    # owner?(erb :'events/edit_event')
-    @event = Event.find_by_slug(params[:slug])
-    @user = User.find_by_id(session[:user_id])
 
-    if @event.user_id != @user.id
+  get '/events/:slug/edit' do
+    if !logged_in?
+      redirect '/'
+    elsif !owner?
       # error you cannot edit this event
       redirect '/events'
-    elsif !logged_in?
-      redirect '/'
     else
       erb :'events/edit_event'
     end
@@ -80,15 +65,21 @@ class EventsController < ApplicationController
     erb :'events/show_event'
   end
 
-  get "/events/:slug/delete" do
-      owner?(erb :'events/delete_event')
+  get '/events/:slug/delete' do
+    if !logged_in?
+      redirect '/'
+    elsif !owner?
+      redirect '/events'
+    else
+      erb :'events/delete_event'
+    end
   end
 
-  delete "/events/:slug/delete" do
+  delete '/events/:slug/delete' do
     @event = Event.find_by_slug(params[:slug])
     @user = User.find_by_id(session[:user_id])
 
-    if @user == @event.user
+    if owner?
       @event.delete
       redirect '/events'
     else
