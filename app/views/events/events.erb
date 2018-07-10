@@ -1,16 +1,18 @@
 <h1>Welcome, <%=current_user.username.titleize %>!</h1>
 
-<h2>Check out Some Upcoming Events in Oakland</h2>
+<h2>Check Out Some Upcoming Events in Oakland</h2>
 
 
-<!--create a method to check for future dated events if event.date>=today-->
 <%Event.all.each do |event| %>
-<p>Event Name:<b> <%=event.name.upcase %></b></br>
-  When: <%=event.date %></br>
-  Where: <%=event.location %></br>
-  Details: <%=event.description %></p>
+
+  <p>Event Name:<b> <%=event.name.upcase %></b></br>
+
+    When: <%=event.date %></br>
+    Where: <%=event.location %></br>
+    Details: <%=event.description %></p>
 <%end %>
 
 
-<a href='/events/new'>Have an event to share?</a></br></br>
-<a href="/logout">Logout</a>
+<a href='/events/new'>Post An Event</a></br>
+<a href="/show">Your Profile</a></br>
+<a href="/logout">Logout</a></br>

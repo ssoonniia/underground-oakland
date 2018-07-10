@@ -1,13 +1,15 @@
 <h1>Check Out Your Event</h1>
 
-<h3><%=@event.name%></h3></br>
-<%=@event.date %></br>
-<%=@event.location %></br>
-<%=@event.description %></br>
+<h3>Event Name: <%=@event.name%></h3>
+Date: <%=@event.date %></br>
+Cost: <%=@event.cost%> </br>
+Location: <%=@event.location %></br>
+description: <%=@event.description %></br>
 
-
+<br></br>
 
 <a href="<%=@event.slug%>/edit">Edit Event</a></br>
 <a href="<%=@event.slug%>/delete">Delete Event</a></br>
 <a href="/events">Check Out All Events</a></br>
+<a href="/show">Your Profile</a></br>
 <a href="/logout">Log Out</a>

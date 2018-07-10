@@ -8,8 +8,7 @@ class UsersController < ApplicationController
     @user = User.create(params[:user])
       if @user.save
         session[:user_id] = @user.id
-
-        redirect to '/show'
+        redirect to '/events'
       else
         redirect '/signup'
       end
@@ -43,8 +42,6 @@ class UsersController < ApplicationController
       redirect '/login'
     end
   end
-
-
 
 
 end

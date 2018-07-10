@@ -1,2 +1,22 @@
-<h1>Your Underground Oakland Profile </h1>
-<%=@user.username%>
+<h1><%=@user.username.titleize%>'s Underground Oakland Profile </h1>
+
+<h2></h2>
+
+
+<h3>Your Event Postings </h3></br>
+<%Event.all.each do |event| %>
+
+  <%if event.user == @user %>
+    <a href='/events/<%=event.slug%>'><%= event.name %></a></br>
+    <br></br>
+  <%end %>
+<%end%>
+
+
+
+Create an <a href='/events/new'>event</a>.
+<br></br>
+Check out what else is happening in <a href='/events'>Oakland</a></br>
+
+<br></br>
+<a href="/logout">Logout</a>

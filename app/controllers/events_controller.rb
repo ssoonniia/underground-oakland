@@ -1,8 +1,9 @@
 class EventsController < ApplicationController
 
+# events
   get '/events' do
     if !logged_in?
-      redirect '/login'
+      redirect '/'
     else
       erb :'events/events'
     end
@@ -10,7 +11,7 @@ class EventsController < ApplicationController
 
   get '/events/new' do
     if !logged_in?
-      redirect '/login'
+      redirect '/'
     else
       erb :'events/create_event'
     end
@@ -30,7 +31,7 @@ class EventsController < ApplicationController
 
   get '/events/:slug' do
     if !logged_in?
-      redirect '/login'
+      redirect '/'
     else
       @event = Event.find_by_slug(params[:slug])
       erb :'events/show_event'
@@ -39,14 +40,12 @@ class EventsController < ApplicationController
 
   get '/events/:slug/edit' do
     if !logged_in?
-      redirect '/login'
+      redirect '/'
     else
       @event = Event.find_by_slug(params[:slug])
       erb :'events/edit_event'
     end
   end
-
-
 
   patch '/events/:slug/edit' do
     @event = Event.find_by_slug(params[:slug])
@@ -54,7 +53,6 @@ class EventsController < ApplicationController
     @event.save
 
     erb :'events/show_event'
-
   end
 
   get "/events/:slug/delete" do
@@ -72,9 +70,6 @@ class EventsController < ApplicationController
     else
       redirect '/events'
     end
-  end 
-
-
-
+  end
 
 end
