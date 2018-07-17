@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   end
 
   get '/show' do
-    @user = User.find_by_id(session[:user_id])
+    @user = current_user
     erb :'users/show'
   end
 

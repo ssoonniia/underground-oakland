@@ -22,9 +22,9 @@ class EventsController < ApplicationController
     end
   end
 
-  post '/events/new' do
+  post '/events' do
     @event = Event.create(params['event'])
-    @user = User.find_by_id(session[:user_id])
+    @user = current_user
     @event.user = @user
 
     if @event.save
@@ -81,7 +81,7 @@ class EventsController < ApplicationController
 
   delete '/events/:slug/delete' do
     @event = Event.find_by_slug(params[:slug])
-    @user = User.find_by_id(session[:user_id])
+    @user = current_user
     @event.delete
     redirect '/events'
   end
