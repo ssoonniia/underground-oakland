@@ -13,7 +13,8 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect to '/events'
     else
-      redirect '/signup'
+      flash[:message] = "Oh - oh! Something went wrong. Please ensure all fields are completed to sign up. OR if you are already a memeber - please sign in instead."
+      redirect '/'
     end
   end
 
@@ -33,8 +34,9 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect '/events'
     else
-      # create error message instructing username and password do not match. OR create new account
-      redirect :'/'
+      flash[:message] = "Oh- oh something went wrong! Please check your username and password. OR if you aren't a memeber yet - please sign up first."
+
+      redirect '/'
     end
   end
 

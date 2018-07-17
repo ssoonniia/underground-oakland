@@ -1,6 +1,5 @@
 <h1>Edit Event</h1>
 
-
 <form action='/events/<%=@event.slug%>' method="post"></br>
   <input id="hidden" type="hidden" name="_method" value="patch">
   Name: <input type="text" name="event[name]" value="<%=@event.name%>" ></br>
@@ -8,8 +7,5 @@
   Where is it? <input type="text" name="event[location]" value="<%=@event.location%>" ></br>
   How much is it? <input type="text" name="event[cost]" value="<%=@event.cost%>" ></br>
   Tell us more about it! <textarea name="event[description]" placeholder="<%=@event.description%>"><%=@event.description%></textarea></br>
-
-  <!--Text area does not have value attribute. Other suggestions?  -->
-
   <input type="submit" name="submit" value="Update"></br>
 </form>

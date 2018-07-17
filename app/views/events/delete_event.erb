@@ -1,7 +1,6 @@
 <h1>Want to delete <%=@event.name%>?</h1>
 
 <form action="/events/<%=@event.slug%>/delete" method="post">
-<input id="hidden" type="hidden" name="_method" value="delete">
-Yes: <input type="submit" name="delete" value="Delete Event"><br>
-
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  Yes: <input type="submit" name="delete" value="Delete Event"><br>
 </form>

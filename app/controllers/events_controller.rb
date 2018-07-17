@@ -6,7 +6,7 @@ class EventsController < ApplicationController
 
   get '/events' do
     if !logged_in?
-      flash[:message] = "Please log or sign up to see events."
+      flash[:message] = "Please log in or sign up to see events."
       redirect '/'
     else
       erb :'events/events'
@@ -40,7 +40,7 @@ class EventsController < ApplicationController
       flash[:message] = "Please log in or sign up to see events."
       redirect '/'
     elsif !owner?
-      flash[:message] = "Yikes - you didn't create this event. You cannot edit this event"
+      flash[:message] = "Nothing to see here - below are the event details!"
       redirect '/events'
     else
       erb :'events/show_event'

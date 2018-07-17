@@ -1,6 +1,3 @@
-# require './config/environment'
-# require 'sinatra/base'
-
 class ApplicationController < Sinatra::Base
 
   configure do
@@ -10,7 +7,7 @@ class ApplicationController < Sinatra::Base
     set :session_secret, "underground_secret"
   end
 
-  get "/" do
+  get '/' do
     erb :index
   end
 
